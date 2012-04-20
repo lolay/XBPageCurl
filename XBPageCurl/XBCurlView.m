@@ -802,7 +802,9 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
     //Start the cylinder animation
     [self setCylinderPosition:cylinderPosition animatedWithDuration:duration];
     [self setCylinderAngle:cylinderAngle animatedWithDuration:duration];
-    [self setCylinderRadius:cylinderRadius animatedWithDuration:duration];
+    [self setCylinderRadius:cylinderRadius animatedWithDuration:duration completion:^{
+        [self stopAnimating];
+    }];
     
     //Allow interaction with back view
     self.userInteractionEnabled = NO;
@@ -831,6 +833,8 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
         [weakSelf stopAnimating];
         weakSelf.curlingView = nil;
     }];
+    
+    [self startAnimating];
 }
 
 
