@@ -31,18 +31,12 @@
     return self;
 }
 
-- (void)dealloc
-{
-    self.animations = nil;
-    [super dealloc];
-}
-
 
 #pragma mark - Methods
 
 + (id)animationManager
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (void)runAnimation:(XBAnimation *)animation

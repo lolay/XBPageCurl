@@ -140,7 +140,6 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
         _verticalResolution = verticalResolution;
         
         if (![self initialize]) {
-            [self release];
             return nil;
         }
         
@@ -164,8 +163,6 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
     [self destroyFramebuffer];
     //Keep this last one as the last one
     self.context = nil;
-
-    [super dealloc];
 }
 
 
@@ -825,13 +822,14 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
     //Animate the cylinder back to its start position at the right side of the screen, oriented vertically
     [self setCylinderPosition:CGPointMake(frame.size.width, frame.size.height/2) animatedWithDuration:duration];
     [self setCylinderAngle:M_PI_2 animatedWithDuration:duration];
+    __weak XBCurlView* weakSelf = self;
     [self setCylinderRadius:20 animatedWithDuration:duration completion:^(void) {
         //Setup the view hierarchy properly after the animation is finished
-        self.curlingView.hidden = NO;
-        [self removeFromSuperview];
+        weakSelf.curlingView.hidden = NO;
+        [weakSelf removeFromSuperview];
         //Stop the rendering loop since the curlView was removed from its superview nad hence won't appear
-        [self stopAnimating];
-        self.curlingView = nil;
+        [weakSelf stopAnimating];
+        weakSelf.curlingView = nil;
     }];
 }
 
