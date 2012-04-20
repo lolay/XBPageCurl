@@ -802,8 +802,9 @@ void MultiplyM4x4(const GLfloat *A, const GLfloat *B, GLfloat *out);
     //Start the cylinder animation
     [self setCylinderPosition:cylinderPosition animatedWithDuration:duration];
     [self setCylinderAngle:cylinderAngle animatedWithDuration:duration];
+    __weak XBCurlView* weakSelf = self;
     [self setCylinderRadius:cylinderRadius animatedWithDuration:duration completion:^{
-        [self stopAnimating];
+        [weakSelf stopAnimating];
     }];
     
     //Allow interaction with back view
